@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/theming.css">
+    <link rel="stylesheet" href="css/stylesheet.css">
+    <title>Timer</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="container_row">
+            <h1 class="timer" id="clock">00:00</h1>
+        </div>
+        <div class="container_row">
+            <canvas id="clock_line"></canvas>
+        </div>
+        <div class="container_row">
+            <input id="name" type="text">
+        </div>
+        <div class="container_row">
+            <div id="records">
+                <h3>Recent Speakers</h3>
+            </div>
+        </div>
+    </div>
+    <div id="bottom_bar">
+        <div class="footer">
+            <select id="theme_selector">
+                <option>Dark</option>
+                <option>Light</option>
+                <option>Twilight</option>
+                <option>Kimbie Dark</option>
+            </select>
+
+            <p></p>
+            Speech time in
+
+            <label>minutes: </label>
+            <input onchange="updateSpeechTime()" type="number" min="0" max="60" value="0" id="t_min">
+            <label>and seconds: </label>
+            <input onchange="updateSpeechTime()" type="number" min="0" max="59" value="0" id="t_sec">
+
+            <button onclick="startClock()">Start</button>
+            <button onclick="stopClock()">Stop</button>
+
+        </div>
+        <div id="alert_box" class="footer" style="right: 0px;margin-right: 10px;">
+            <button
+                onclick="addAlert(parseInt(document.getElementById('a_min').value.toString()),parseInt(document.getElementById('a_sec').value.toString()))">Add
+                alert at</button>
+
+            <label>Minutes: </label>
+            <input type="number" min="0" max="60" value="0" id="a_min">
+            <label>Seconds: </label>
+            <input type="number" min="0" max="59" value="0" id="a_sec">
+        </div>
+
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

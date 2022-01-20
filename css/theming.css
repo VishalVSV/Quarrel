@@ -1,0 +1,35 @@
+:root {
+    --bg-color: rgb(48,48,48);
+    --text-color: white;
+    --light-text: grey;
+    --progress-color: red;
+}
+
+[theme="dark"] {
+    --bg-color: rgb(48,48,48);
+    --text-color: white;
+    --light-text: grey;
+    --progress-color: red;
+}
+
+[theme="light"] {
+    --bg-color: rgb(212, 212, 212);
+    --text-color: rgb(0, 0, 0);
+    --light-text: grey;
+    --progress-color: red;
+}
+
+
+[theme="twilight"] {
+    --bg-color: #4C007F;
+    --text-color: rgb(0, 217, 255);
+    --light-text: rgb(0, 113, 133);
+    --progress-color: red;
+}
+
+[theme="kimbie dark"] {
+    --bg-color: #221A0F;
+    --text-color: #E99A32;
+    --light-text: #ffdfb5;
+    --progress-color: red;
+}
