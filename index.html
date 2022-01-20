@@ -45,8 +45,8 @@
             <button onclick="startClock()">Start</button>
             <button onclick="stopClock()">Stop</button>
 
-        </div>
-        <div id="alert_box" class="footer" style="right: 0px;margin-right: 10px;">
+            <p></p>
+
             <button
                 onclick="addAlert(parseInt(document.getElementById('a_min').value.toString()),parseInt(document.getElementById('a_sec').value.toString()))">Add
                 alert at</button>
@@ -55,6 +55,10 @@
             <input type="number" min="0" max="60" value="0" id="a_min">
             <label>Seconds: </label>
             <input type="number" min="0" max="59" value="0" id="a_sec">
+
+        </div>
+        <div id="alert_box" class="footer" style="right: 0px;margin-right: 10px;">
+            
         </div>
 
     </div>
