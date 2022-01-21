@@ -12,11 +12,11 @@ function getName() {
 
     if(name == "" || name == null) {
         name = `Speaker ${name_number++}`;
+        document.getElementById("name").placeholder = `Speaker ${name_number}`;
     }
 
     return name;
 }
-
 document.getElementById("theme_selector").onchange = updateTheme;
 
 updateTheme();
@@ -45,6 +45,7 @@ var speechTime = 0;
 
 function startClock() {
     if(speechTime == 0) {
+        alert("Speech time cannot be zero!");
         return;
     }
 
@@ -71,13 +72,14 @@ function startClock() {
             cl_ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue("--text-color");
             cl_ctx.lineWidth = 4;
             cl_ctx.beginPath();
-            cl_ctx.moveTo(w * ((time_elapsed_seconds - 1) / speechTime), 9);
+            cl_ctx.moveTo(0, 9);
             cl_ctx.lineTo(w * (time_elapsed_seconds / speechTime), 9);
             cl_ctx.closePath();
             cl_ctx.stroke();
         }
         else {
             beep();
+            clock.classList.add("over_time");
             cl_ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue("--progress-color");
             cl_ctx.lineWidth = 4;
             cl_ctx.beginPath();
@@ -96,6 +98,9 @@ function stopClock() {
         window.clearInterval(updateLoop);
         updateLoop = null;
         clock_start = null;
+
+        clock.classList.remove("over_time");
+        document.getElementById("name").value = "";        
 
         let record = document.createElement("p");
         let time = null;
@@ -130,6 +135,14 @@ function stopClock() {
         }
 
         cl_ctx.clearRect(0,0, cl.width, cl.clientHeight);
+
+        cl_ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue("--light-text");
+        cl_ctx.lineWidth = 0.2;
+        cl_ctx.beginPath();
+        cl_ctx.moveTo(0, 10);
+        cl_ctx.lineTo(cl.width, 10);
+        cl_ctx.closePath();
+        cl_ctx.stroke();
 
         record.innerHTML = `${record_count++}. ${getName()} - ${time} - ${comment}`;
 
@@ -221,8 +234,6 @@ cl_ctx.lineTo(cl.width, 10);
 cl_ctx.closePath();
 cl_ctx.stroke();
 
-cl_ctx.setLineDash([4,2]);
-
 updateSpeechTime();
 
 
@@ -239,3 +250,6 @@ if(params.get("alerts")) {
     alerts = params.get("alerts").split(',').map(m => parseInt(m));
     drawAlerts();
 }
+
+
+document.getElementById("name").placeholder = `Speaker ${name_number}`;

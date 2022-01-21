@@ -4,12 +4,31 @@
     50% { opacity: 0; }
 }
 
-h1.timer {
-    text-align: center;
-    font-size: 8em;
-    margin-top: 30%;
+@media only screen and (orientation: portrait) {
+    h1.timer {
+        text-align: center;
+        font-size: 25vw;
+        margin-top: 10%;
+        margin-bottom: 10px;
+        transition: opacity 0.5s linear;
+        font-family: 'Courier New', Courier, monospace;
+    }
+}
+
+
+@media only screen and (orientation: landscape) {
+    h1.timer {
+        text-align: center;
+        font-size: 10vw;
+        margin-top: 30%;
+        margin-bottom: 10px;
+        transition: opacity 0.5s linear;
+        font-family: 'Courier New', Courier, monospace;
+    }
+}
+
+#clock_line {
     margin-bottom: 50px;
-    transition: opacity 0.5s linear;
 }
 
 div.container {
@@ -51,6 +70,17 @@ button {
     border-radius: 5px;
 }
 
+.over_time {
+    color: red;
+    animation: blinker 0.75s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
 input[type="number"] {
     appearance: textfield;
 }
@@ -64,9 +94,8 @@ div.container_row {
 }
 
 div.footer {
-    position: absolute;
-    bottom: 0px;
     font-size: 1.2em;
+    text-align: center;
 }
 
 .footer > input {

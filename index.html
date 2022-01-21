@@ -2,10 +2,12 @@
 <html theme="dark">
 
 <head>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/theming.css">
     <link rel="stylesheet" href="css/stylesheet.css">
-    <title>Timer</title>
+    <title>Quarrel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
@@ -17,23 +19,10 @@
             <canvas id="clock_line"></canvas>
         </div>
         <div class="container_row">
-            <input id="name" type="text">
+            <input id="name" type="text" placeholder="Speaker Name" style="font-family: 'Courier New', Courier, monospace;">
         </div>
-        <div class="container_row">
-            <div id="records">
-                <h3>Recent Speakers</h3>
-            </div>
-        </div>
-    </div>
-    <div id="bottom_bar">
+        
         <div class="footer">
-            <select id="theme_selector">
-                <option>Dark</option>
-                <option>Light</option>
-                <option>Twilight</option>
-                <option>Kimbie Dark</option>
-            </select>
-
             <p></p>
             Speech time in
 
@@ -41,7 +30,7 @@
             <input onchange="updateSpeechTime()" type="number" min="0" max="60" value="0" id="t_min">
             <label>and seconds: </label>
             <input onchange="updateSpeechTime()" type="number" min="0" max="59" value="0" id="t_sec">
-
+            <br><br>
             <button onclick="startClock()">Start</button>
             <button onclick="stopClock()">Stop</button>
 
@@ -50,17 +39,53 @@
             <button
                 onclick="addAlert(parseInt(document.getElementById('a_min').value.toString()),parseInt(document.getElementById('a_sec').value.toString()))">Add
                 alert at</button>
-
+            <br><br>
             <label>Minutes: </label>
             <input type="number" min="0" max="60" value="0" id="a_min">
             <label>Seconds: </label>
             <input type="number" min="0" max="59" value="0" id="a_sec">
 
         </div>
-        <div id="alert_box" class="footer" style="right: 0px;margin-right: 10px;">
-            
+        
+        <div class="container_row">
+            <div id="records">
+                <h3>Recent Speakers</h3>
+            </div>
         </div>
+        
+    </div>
 
+    <div>
+            
+        <p style="font-size: 0.4em;">
+                ⠀⠀⠀⠀⠀⠀⡀⠈⠀⠀⠀⠀⣠⠀⠀⠀⢈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀<br>
+        ⠀⠀⠀⠀⠀⠀⠀⡱⣯⣌⢈⠀⣰⣏⠈⣨⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀<br>
+        ⠀⠀⠀⢈⠀⠀⠀⠀⠐⡳⣷⣯⣾⣿⣯⣾⣏⣌⡮⠃⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀<br>
+        ⠀⠀⠀⠐⡳⣿⣿⣯⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣟⣌⡬⠂⠀⠀⠀⠀⠀⠀<br>
+        ⠀⠀⢀⢈⢈⢘⣙⣝⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢟⠉⠀⠀⠀⠀⠀⠀⠀<br>
+        ⠀⠀⠐⢑⢻⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣯⡦⠓⠀⠀⠀<br>
+        ⠀⠀⠀⠀⠀⠑⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣟⢙⢈⢈⠀⠀⠀⠀<br>
+        ⠀⠀⠀⠀⠠⣑⠷⡿⣿⡷⡳⣷⣷⣿⠷⠳⣷⣿⣿⣿⣿⣿⠷⠳⠓⠁⠀⠀⠀⠀<br>
+        ⠀⠀⠀⠀⠀⠁⠀⠀⣷⠀⡦⠀⠏⢇⠰⠃⣐⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀<br>
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠰⠯⠢⠲⠀⠀⠁⠐⠳⡱⣿⣿⠿⠀⠀⠀⠀⠀⠀⠀⠀⠀<br>
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠠⣿⣿⣋⣌⠈⠀⠀⠀⠀⠀⠀⠀<br>
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⡰⡄⠈⠀⠀⠀⢈⢈⣬⣿⣿⣿⣿⣯⣮⣌⣌⣌⢈⢈⠈<br>
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡤⠦⠳⠑⠐⣷⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿<br>
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣬⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿<br>
+        █▀▄▀█ ▄▀█ █▀▄ █▀▀   █▄▄ █▄█   █░█ █▀▀ █▀█ ▀█▀ █▀▀ ▀▄▀<br>
+        █░▀░█ █▀█ █▄▀ ██▄   █▄█ ░█░   ▀▄▀ ██▄ █▀▄ ░█░ ██▄ █░█<br>
+        </p><br>
+
+        <div style="font-size: 1.2em; font-family: 'Courier New', Courier, monospace;">
+            <select id="theme_selector">
+                <option>Dark</option>
+                <option>Light</option>
+                <option>Twilight</option>
+                <option>Kimbie Dark</option>
+            </select>
+                
+            <a href="https://github.com/VishalVSV" target="_blank"><img style="transform: translateY(5px);" src="https://github.githubassets.com/images/modules/site/icons/footer/github-mark.svg"></a>
+        </div>
     </div>
 
     <script src="js/main.js"></script>
