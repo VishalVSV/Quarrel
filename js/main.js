@@ -144,6 +144,8 @@ function stopClock() {
         cl_ctx.closePath();
         cl_ctx.stroke();
 
+        drawAlerts();
+
         record.innerHTML = `${record_count++}. ${getName()} - ${time} - ${comment}`;
 
         document.getElementById("records").appendChild(record);
@@ -179,6 +181,28 @@ function drawAlerts() {
         cl_ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--bg-color");
         cl_ctx.fillRect(x, 1, 2, 13);
     }
+}
+
+function copyTemplateLink() {
+    if(speechTime == 0) {
+        alert("Speech time cannot be zero");
+        return;
+    }
+
+    let url = "https://vishalvsv.github.io/Quarrel?st=";
+    url += speechTime.toString();
+    if(alerts.length != 0) {
+        url += "&alerts=";
+        for (let i = 0; i < alerts.length; i++) {
+            url += alerts[i].toString();
+            if (i + 1 != alerts.length) {
+                url += ",";
+            }
+        }
+    }
+
+    navigator.clipboard.writeText(url);
+    alert("Templated link copied!");
 }
 
 function updateSpeechTime() {
@@ -230,6 +254,8 @@ window.onresize = function() {
     cl_ctx.lineTo(cl.width, 10);
     cl_ctx.closePath();
     cl_ctx.stroke();
+
+    drawAlerts();
 }
 let w = clock.clientWidth;
 cl.width = w * 1.2;

@@ -31,12 +31,13 @@
             <label>and seconds: </label>
             <input onchange="updateSpeechTime()" type="number" min="0" max="59" value="0" id="t_sec">
             <br><br>
-            <button onclick="startClock()">Start</button>
-            <button onclick="stopClock()">Stop</button>
+            <button onclick="startClock()" style="font-size: 1.4em;">Start</button>
+            <button onclick="stopClock()" style="font-size: 1.4em;">Stop</button>
 
             <p></p>
+            <br>
 
-            <button
+            <button 
                 onclick="addAlert(parseInt(document.getElementById('a_min').value.toString()),parseInt(document.getElementById('a_sec').value.toString()))">Add
                 alert at</button>
             <br><br>
@@ -85,8 +86,10 @@
             </select>
                 
             <a href="https://github.com/VishalVSV" target="_blank"><img style="transform: translateY(5px);" src="https://github.githubassets.com/images/modules/site/icons/footer/github-mark.svg"></a>
+            <button onclick="copyTemplateLink()">Copy link</button>
         </div>
     </div>
+
 
     <script src="js/main.js"></script>
 </body>
