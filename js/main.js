@@ -220,9 +220,18 @@ function beep() {
 var cl = document.getElementById("clock_line");
 var cl_ctx = cl.getContext("2d");
 
-cl_ctx.font = "8em Courier New";
-
-let w = cl_ctx.measureText("00:00").width;
+window.onresize = function() {
+    w = clock.clientWidth;
+    cl.width = w * 1.2;
+    cl_ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue("--light-text");
+    cl_ctx.lineWidth = 0.2;
+    cl_ctx.beginPath();
+    cl_ctx.moveTo(0, 10);
+    cl_ctx.lineTo(cl.width, 10);
+    cl_ctx.closePath();
+    cl_ctx.stroke();
+}
+let w = clock.clientWidth;
 cl.width = w * 1.2;
 cl.height = 20;
 
