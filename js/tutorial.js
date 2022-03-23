@@ -16,6 +16,7 @@ function getOffset(el) {
 let tutorial_in_progress = false;
 
 let tutorial_sequence = [
+    { text: "This is a simple tutorial for the timer system. Click anywhere to progress.", elem: document.getElementById("clock") },
     { text: "This is the timer. It will count up to the given time and flash red and beep when the time is up.", elem: document.getElementById("clock") },
     { text: "Enter the name of the speaker here.", elem: document.getElementById("name") },
     { text: "Enter the number of minutes for the speech here.", elem: document.getElementById("t_min") },
