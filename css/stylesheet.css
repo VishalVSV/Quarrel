@@ -27,6 +27,18 @@
     }
 }
 
+#tooltip {
+    position: fixed;
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    z-index: 1;
+    text-align: center;
+    padding: 5px 10px;
+    padding-left: 20px;
+    border-radius: 6px;
+    clip-path: polygon(10px 40%, 10px 0, 100% 0, 100% 100%, 10px 100%, 10px 60%, 0% 50%);
+}
+
 #clock_line {
     margin-bottom: 50px;
 }
@@ -38,7 +50,7 @@ div.container {
     flex-direction: column;
 }
 
-input#name {
+input#name:not(:disabled) {
     color: var(--text-color);
     background-color: transparent;
     border: none;
@@ -46,6 +58,17 @@ input#name {
     font-size: 2em;
     text-align: center;
     overflow: scroll;
+}
+
+input#name:disabled {
+    color: var(--text-color);
+    background-color: transparent;
+    border: none;
+    border-bottom: var(--text-color) 2px dotted;
+    font-size: 2em;
+    text-align: center;
+    overflow: scroll;
+    opacity: 0.5;
 }
 
 input#name:focus{
@@ -58,6 +81,10 @@ input#name:focus{
 
 #records > h3 {
     text-align: center;
+}
+
+.help-btn {
+    cursor: pointer;
 }
 
 button {
@@ -81,12 +108,26 @@ button {
     }
 }
 
-input[type="number"] {
+input[type="number"]:not(:disabled) {
     appearance: textfield;
 }
 
-button:hover {
+
+input[type="number"]:disabled {
+    appearance: textfield;
+    opacity: 0.5;
+}
+
+button:hover:not(:disabled) {
     cursor: pointer;
+}
+
+*:disabled {
+    cursor: not-allowed;
+}
+
+button:disabled {
+    opacity: 0.2;
 }
 
 div.container_row {

@@ -53,6 +53,10 @@ function startClock() {
         stopClock();
     }
 
+    document.getElementById("name").disabled = true;
+    document.getElementById("add_alert").disabled = true;
+    (Array.from(document.querySelectorAll("input[type=number]"))).forEach(i => i.disabled = true);
+
     clock_start = new Date();
 
     updateLoop = window.setInterval(function() {
@@ -94,6 +98,10 @@ function startClock() {
 }
 
 function stopClock() {
+    document.getElementById("name").disabled = false;
+    document.getElementById("add_alert").disabled = false;
+    (Array.from(document.querySelectorAll("input[type=number]"))).forEach(i => i.disabled = false);
+
     if (updateLoop != null) {
         window.clearInterval(updateLoop);
         updateLoop = null;
@@ -185,7 +193,7 @@ function drawAlerts() {
 
 function copyTemplateLink() {
     if(speechTime == 0) {
-        alert("Speech time cannot be zero");
+        alert("Can't create a template for speech with no speech time");
         return;
     }
 

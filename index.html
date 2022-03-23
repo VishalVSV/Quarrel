@@ -6,20 +6,43 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/theming.css">
     <link rel="stylesheet" href="css/stylesheet.css">
+    <link rel="stylesheet" href="css/modal.css">
     <title>Quarrel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/modal.js" defer></script>
+    <script src="js/tutorial.js" defer></script>
+    <script src="js/debug.js" defer></script>
 </head>
 
 <body>
+    <div id="help_modal" class="modal">
+        <div class="modal-content">
+            <span class="close" title="Close changelog">&times;</span>
+            <h1 style="border-bottom: 1px solid var(--text-color);width: 95%;">Changelog</h1>
+            <p>
+                +Added changelog.<br>
+                +Added tutorial for pc first time visitors.<br>
+                +Changed the site icon to something that actually makes sense<br>
+                +Added <span title="like this">tooltips</span><br>
+                -Fixed bug where you could edit the speaker time while the timer was active.
+            </p>
+        </div>
+    </div>
+
+
+    <div class="modal" id="tooltip_bg">
+        <div id="tooltip">You're not supposed to see this (;O.O)</div>
+    </div>
+
     <div class="container">
         <div class="container_row">
-            <h1 class="timer" id="clock">00:00</h1>
+            <h1 class="timer" id="clock" title="The timer">00:00</h1>
         </div>
         <div class="container_row">
             <canvas id="clock_line"></canvas>
         </div>
         <div class="container_row">
-            <input id="name" type="text" placeholder="Speaker Name" style="font-family: 'Courier New', Courier, monospace;">
+            <input id="name" type="text" title="Enter the speaker name here." placeholder="Speaker Name" style="font-family: 'Courier New', Courier, monospace;">
         </div>
         
         <div class="footer">
@@ -27,30 +50,30 @@
             Speech time in
 
             <label>minutes: </label>
-            <input onchange="updateSpeechTime()" type="number" min="0" max="60" value="0" id="t_min">
+            <input onchange="updateSpeechTime()" title="Enter speech time in minutes here." type="number" min="0" max="60" value="0" id="t_min">
             <label>and seconds: </label>
-            <input onchange="updateSpeechTime()" type="number" min="0" max="59" value="0" id="t_sec">
+            <input onchange="updateSpeechTime()" title="Enter speech time in seconds here." type="number" min="0" max="59" value="0" id="t_sec">
             <br><br>
-            <button onclick="startClock()" style="font-size: 1.4em;">Start</button>
-            <button onclick="stopClock()" style="font-size: 1.4em;">Stop</button>
+            <button onclick="startClock()" style="font-size: 1.4em;" id="start_btn" title="Press to start the timer">Start</button>
+            <button onclick="stopClock()" style="font-size: 1.4em;" id="stop_btn" title="Press to stop the timer">Stop</button>
 
             <p></p>
             <br>
 
-            <button 
+            <button id="add_alert" title="Press to add an alert"
                 onclick="addAlert(parseInt(document.getElementById('a_min').value.toString()),parseInt(document.getElementById('a_sec').value.toString()))">Add
                 alert at</button>
             <br><br>
             <label>Minutes: </label>
-            <input type="number" min="0" max="60" value="0" id="a_min">
+            <input type="number" min="0" max="60" value="0" id="a_min" title="Enter the alert time in minutes here.">
             <label>Seconds: </label>
-            <input type="number" min="0" max="59" value="0" id="a_sec">
+            <input type="number" min="0" max="59" value="0" id="a_sec" title="Enter the alert time in seconds here.">
 
         </div>
         
         <div class="container_row">
             <div id="records">
-                <h3>Recent Speakers</h3>
+                <h3 id="recent" title="Recent speakers.">Recent Speakers</h3>
             </div>
         </div>
         
@@ -58,7 +81,7 @@
 
     <div>
             
-        <p style="font-size: 0.4em;">
+        <p style="font-size: 0.4em;" title="(O.O)">
                 ⠀⠀⠀⠀⠀⠀⡀⠈⠀⠀⠀⠀⣠⠀⠀⠀⢈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀<br>
         ⠀⠀⠀⠀⠀⠀⠀⡱⣯⣌⢈⠀⣰⣏⠈⣨⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀<br>
         ⠀⠀⠀⢈⠀⠀⠀⠀⠐⡳⣷⣯⣾⣿⣯⣾⣏⣌⡮⠃⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀<br>
@@ -78,15 +101,16 @@
         </p><br>
 
         <div style="font-size: 1.2em; font-family: 'Courier New', Courier, monospace;">
-            <select id="theme_selector">
+            <select id="theme_selector" title="Select a theme.">
                 <option>Dark</option>
                 <option>Light</option>
-                <option>Twilight</option>
+                <option title="Don't judge, this was supposed to be temporary">Twilight</option>
                 <option>Kimbie Dark</option>
             </select>
                 
-            <a href="https://github.com/VishalVSV" target="_blank"><img style="transform: translateY(5px);" src="https://github.githubassets.com/images/modules/site/icons/footer/github-mark.svg"></a>
-            <button onclick="copyTemplateLink()">Copy link</button>
+            <a href="https://github.com/VishalVSV" title="My github" target="_blank"><img style="transform: translateY(5px);" src="https://github.githubassets.com/images/modules/site/icons/footer/github-mark.svg"></a>
+            <span onclick="modal.style.display='block'" title="Changelog" class="help-btn">𝌡</span>
+            <button onclick="copyTemplateLink()" title="Copy the timer settings as a templated link">Copy link</button>
         </div>
     </div>
 
