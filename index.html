@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html theme="dark">
+<html>
 
 <head>
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
@@ -10,7 +10,6 @@
     <title>Quarrel</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="js/modal.js" defer></script>
-    <script src="js/tutorial.js" defer></script>
     <script src="js/debug.js" defer></script>
 </head>
 
@@ -20,17 +19,36 @@
             <span class="close" title="Close changelog">&times;</span>
             <h1 style="border-bottom: 1px solid var(--text-color);width: 95%;">Changelog</h1>
             <p>
-                +Added changelog.<br>
-                +Added tutorial for pc first time visitors.<br>
-                +Changed the site icon to something that actually makes sense<br>
-                +Added <span title="like this">tooltips</span><br>
-                -Fixed bug where you could edit the speaker time while the timer was active.
+                + Moved the made by vertex art here<br>
+                + Added pause and resume<br>
+                + Made the boring text buttons into cryptic symbols<br>
+                + Massive theming overhaul<br>
+                + Added dynamic Url updating. You can now simply copy the url from the address bar to use as a template<br>
             </p>
+            <p style="font-size: 0.4em;" title="(O.O)">
+                ⠀⠀⠀⠀⠀⠀⡀⠈⠀⠀⠀⠀⣠⠀⠀⠀⢈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀<br>
+        ⠀⠀⠀⠀⠀⠀⠀⡱⣯⣌⢈⠀⣰⣏⠈⣨⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀<br>
+        ⠀⠀⠀⢈⠀⠀⠀⠀⠐⡳⣷⣯⣾⣿⣯⣾⣏⣌⡮⠃⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀<br>
+        ⠀⠀⠀⠐⡳⣿⣿⣯⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣟⣌⡬⠂⠀⠀⠀⠀⠀⠀<br>
+        ⠀⠀⢀⢈⢈⢘⣙⣝⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢟⠉⠀⠀⠀⠀⠀⠀⠀<br>
+        ⠀⠀⠐⢑⢻⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣯⡦⠓⠀⠀⠀<br>
+        ⠀⠀⠀⠀⠀⠑⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣟⢙⢈⢈⠀⠀⠀⠀<br>
+        ⠀⠀⠀⠀⠠⣑⠷⡿⣿⡷⡳⣷⣷⣿⠷⠳⣷⣿⣿⣿⣿⣿⠷⠳⠓⠁⠀⠀⠀⠀<br>
+        ⠀⠀⠀⠀⠀⠁⠀⠀⣷⠀⡦⠀⠏⢇⠰⠃⣐⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀<br>
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠰⠯⠢⠲⠀⠀⠁⠐⠳⡱⣿⣿⠿⠀⠀⠀⠀⠀⠀⠀⠀⠀<br>
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠠⣿⣿⣋⣌⠈⠀⠀⠀⠀⠀⠀⠀<br>
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⡰⡄⠈⠀⠀⠀⢈⢈⣬⣿⣿⣿⣿⣯⣮⣌⣌⣌⢈⢈⠈<br>
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡤⠦⠳⠑⠐⣷⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿<br>
+        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣬⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿<br>
+        █▀▄▀█ ▄▀█ █▀▄ █▀▀   █▄▄ █▄█   █░█ █▀▀ █▀█ ▀█▀ █▀▀ ▀▄▀<br>
+        █░▀░█ █▀█ █▄▀ ██▄   █▄█ ░█░   ▀▄▀ ██▄ █▀▄ ░█░ ██▄ █░█<br>
+        </p><br>
+            <p id="version_display"></p>
         </div>
     </div>
 
 
-    <div class="modal" id="tooltip_bg">
+    <div class="modal not-selectable" id="tooltip_bg">
         <div id="tooltip">You're not supposed to see this (;O.O)</div>
     </div>
 
@@ -54,8 +72,8 @@
             <label>and seconds: </label>
             <input onchange="updateSpeechTime()" title="Enter speech time in seconds here." type="number" min="0" max="59" value="0" id="t_sec">
             <br><br>
-            <button onclick="startClock()" style="font-size: 1.4em;" id="start_btn" title="Press to start the timer">Start</button>
-            <button onclick="stopClock()" style="font-size: 1.4em;" id="stop_btn" title="Press to stop the timer">Stop</button>
+            <button onclick="startClock()" style="font-size: 1.4em; margin-right: 20px;" id="start_btn" title="Press to start the timer" class="play"></button>
+            <button onclick="stopClock()" style="font-size: 1.4em;" id="stop_btn" title="Press to stop the timer" class="stop"></button>
 
             <p></p>
             <br>
@@ -81,40 +99,24 @@
 
     <div>
             
-        <p style="font-size: 0.4em;" title="(O.O)">
-                ⠀⠀⠀⠀⠀⠀⡀⠈⠀⠀⠀⠀⣠⠀⠀⠀⢈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀<br>
-        ⠀⠀⠀⠀⠀⠀⠀⡱⣯⣌⢈⠀⣰⣏⠈⣨⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀<br>
-        ⠀⠀⠀⢈⠀⠀⠀⠀⠐⡳⣷⣯⣾⣿⣯⣾⣏⣌⡮⠃⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀<br>
-        ⠀⠀⠀⠐⡳⣿⣿⣯⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣟⣌⡬⠂⠀⠀⠀⠀⠀⠀<br>
-        ⠀⠀⢀⢈⢈⢘⣙⣝⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢟⠉⠀⠀⠀⠀⠀⠀⠀<br>
-        ⠀⠀⠐⢑⢻⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣯⡦⠓⠀⠀⠀<br>
-        ⠀⠀⠀⠀⠀⠑⣽⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣟⢙⢈⢈⠀⠀⠀⠀<br>
-        ⠀⠀⠀⠀⠠⣑⠷⡿⣿⡷⡳⣷⣷⣿⠷⠳⣷⣿⣿⣿⣿⣿⠷⠳⠓⠁⠀⠀⠀⠀<br>
-        ⠀⠀⠀⠀⠀⠁⠀⠀⣷⠀⡦⠀⠏⢇⠰⠃⣐⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀<br>
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠰⠯⠢⠲⠀⠀⠁⠐⠳⡱⣿⣿⠿⠀⠀⠀⠀⠀⠀⠀⠀⠀<br>
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠠⣿⣿⣋⣌⠈⠀⠀⠀⠀⠀⠀⠀<br>
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⡰⡄⠈⠀⠀⠀⢈⢈⣬⣿⣿⣿⣿⣯⣮⣌⣌⣌⢈⢈⠈<br>
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡤⠦⠳⠑⠐⣷⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿<br>
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣬⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿<br>
-        █▀▄▀█ ▄▀█ █▀▄ █▀▀   █▄▄ █▄█   █░█ █▀▀ █▀█ ▀█▀ █▀▀ ▀▄▀<br>
-        █░▀░█ █▀█ █▄▀ ██▄   █▄█ ░█░   ▀▄▀ ██▄ █▀▄ ░█░ ██▄ █░█<br>
-        </p><br>
+        
 
         <div style="font-size: 1.2em; font-family: 'Courier New', Courier, monospace;">
             <select id="theme_selector" title="Select a theme.">
-                <option>Dark</option>
+                <!-- <option onclick="alert('Test')">Dark</option>
                 <option>Light</option>
                 <option title="Don't judge, this was supposed to be temporary">Twilight</option>
-                <option>Kimbie Dark</option>
+                <option>Kimbie Dark</option> -->
             </select>
                 
             <a href="https://github.com/VishalVSV" title="My github" target="_blank"><img style="transform: translateY(5px);" src="https://github.githubassets.com/images/modules/site/icons/footer/github-mark.svg"></a>
-            <span onclick="modal.style.display='block'" title="Changelog" class="help-btn">𝌡</span>
-            <button onclick="copyTemplateLink()" title="Copy the timer settings as a templated link">Copy link</button>
+            <span onclick="open_modal()" title="Changelog" class="help-btn">𝌡</span>
         </div>
     </div>
 
 
+    <script src="js/tutorial.js"></script>
+    <script src="js/theming.js"></script>
     <script src="js/main.js"></script>
 </body>
 

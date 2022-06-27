@@ -1,4 +1,4 @@
-let current_version = "v1.0.0";
+let current_version = "v1.1.0";
 
 
 let tooltip_container = document.getElementById("tooltip_bg");
@@ -50,7 +50,7 @@ function tutorial_start() {
 function move_tooltip_to(elem) {
     let c = getOffset(elem);
     tooltip.style.left = `${c.left}px`;
-    tooltip.style.top = `${c.top}px`;
+    tooltip.style.top = `${c.top - document.documentElement.scrollTop + elem.clientHeight / 2 - tooltip.clientHeight / 2}px`;
 }
 
 window.addEventListener('click',function(event) {
@@ -69,6 +69,10 @@ window.addEventListener('click',function(event) {
             }
         }
     }
+});
+
+window.addEventListener('scroll', (e) => {
+    move_tooltip_to(tutorial_sequence[tutorial_sequence_index].elem);
 });
 
 window.mobileCheck = function() {

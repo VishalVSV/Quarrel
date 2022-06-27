@@ -1,6 +1,4 @@
-function updateTheme() {
-    document.documentElement.setAttribute("theme", document.getElementById("theme_selector").value.toString().toLowerCase());
-}
+var current_theme = dark_theme;
 
 let alerts = [];
 
@@ -17,16 +15,41 @@ function getName() {
 
     return name;
 }
-document.getElementById("theme_selector").onchange = updateTheme;
-
-updateTheme();
 
 var time_elapsed_seconds = 0;
 var clock_start;
 var clock = document.getElementById("clock");
 
+let paused = false;
+
 function updateClock() {
-    clock.innerText = `${Math.floor(time_elapsed_seconds / 60).toString().padStart(2, '0')}:${Math.floor(time_elapsed_seconds % 60).toString().padStart(2, '0')}`
+    let last_text = clock.innerText;
+    
+    clock.innerText = `${Math.floor(time_elapsed_seconds / 60).toString().padStart(2, '0')}:${Math.floor(time_elapsed_seconds % 60).toString().padStart(2, '0')}`;
+
+    if (last_text != clock.innerText) {
+        let scaling_factor = (Math.floor(time_elapsed_seconds) / speechTime);
+
+        if(scaling_factor < 1) {
+            cl_ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue("--text-color");
+            cl_ctx.lineWidth = 4;
+            cl_ctx.beginPath();
+            cl_ctx.moveTo(0, 9);
+            cl_ctx.lineTo(w * (time_elapsed_seconds / speechTime), 9);
+            cl_ctx.closePath();
+            cl_ctx.stroke();
+        }
+        else {
+            clock.classList.add("over_time");
+            cl_ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue("--progress-color");
+            cl_ctx.lineWidth = 4;
+            cl_ctx.beginPath();
+            cl_ctx.moveTo(w * ((time_elapsed_seconds - 1) / speechTime), 9);
+            cl_ctx.lineTo(w * (time_elapsed_seconds / speechTime), 9);
+            cl_ctx.closePath();
+            cl_ctx.stroke();
+        }
+    }
 }
 
 function setTimer(mins, secs) {
@@ -42,6 +65,7 @@ function getSpeechTime() {
 }
 
 var speechTime = 0;
+var draw = true;
 
 function startClock() {
     if(speechTime == 0) {
@@ -50,8 +74,28 @@ function startClock() {
     }
 
     if(updateLoop != null) {
-        stopClock();
+        paused = !paused;
+        if (paused) {
+            document.getElementById("start_btn").classList.add("play");
+            document.getElementById("start_btn").classList.remove("pause");
+        }
+        else {
+            clock_start = Date.now();
+            document.getElementById("start_btn").classList.add("pause");
+            document.getElementById("start_btn").classList.remove("play");
+        }
+        return;
     }
+
+    if (paused) {
+        document.getElementById("start_btn").classList.add("play");
+        document.getElementById("start_btn").classList.remove("pause");
+    }
+    else {
+        document.getElementById("start_btn").classList.add("pause");
+        document.getElementById("start_btn").classList.remove("play");
+    }
+
 
     document.getElementById("name").disabled = true;
     document.getElementById("add_alert").disabled = true;
@@ -60,7 +104,20 @@ function startClock() {
     clock_start = new Date();
 
     updateLoop = window.setInterval(function() {
-        time_elapsed_seconds = Math.floor((Date.now() - clock_start) / 1000);
+
+        if (paused) {
+            document.getElementById("start_btn").classList.add("play");
+            document.getElementById("start_btn").classList.remove("pause");
+        }
+        else {
+            document.getElementById("start_btn").classList.add("pause");
+            document.getElementById("start_btn").classList.remove("play");
+        }
+
+        if (paused) return;
+
+        time_elapsed_seconds += (Date.now() - clock_start) / 1000;
+        clock_start = Date.now();
         
         for (let i = 0; i < alerts.length; i++) {
             const alert = alerts[i];
@@ -70,30 +127,11 @@ function startClock() {
             }
         }
         
-        let scaling_factor = (time_elapsed_seconds / speechTime);
-
-        if(scaling_factor <= 1) {
-            cl_ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue("--text-color");
-            cl_ctx.lineWidth = 4;
-            cl_ctx.beginPath();
-            cl_ctx.moveTo(0, 9);
-            cl_ctx.lineTo(w * (time_elapsed_seconds / speechTime), 9);
-            cl_ctx.closePath();
-            cl_ctx.stroke();
-        }
-        else {
+        if (time_elapsed_seconds >= speechTime) {
             beep();
-            clock.classList.add("over_time");
-            cl_ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue("--progress-color");
-            cl_ctx.lineWidth = 4;
-            cl_ctx.beginPath();
-            cl_ctx.moveTo(w * ((time_elapsed_seconds - 1) / speechTime), 9);
-            cl_ctx.lineTo(w * (time_elapsed_seconds / speechTime), 9);
-            cl_ctx.closePath();
-            cl_ctx.stroke();
         }
-        
         updateClock();
+        draw = !draw;
     }, 500);
 }
 
@@ -101,8 +139,13 @@ function stopClock() {
     document.getElementById("name").disabled = false;
     document.getElementById("add_alert").disabled = false;
     (Array.from(document.querySelectorAll("input[type=number]"))).forEach(i => i.disabled = false);
+    draw = true;
 
     if (updateLoop != null) {
+        paused = false;
+        document.getElementById("start_btn").classList.add("play");
+        document.getElementById("start_btn").classList.remove("pause");
+
         window.clearInterval(updateLoop);
         updateLoop = null;
         clock_start = null;
@@ -120,25 +163,26 @@ function stopClock() {
         }
 
         let comment = null;
-        if (time_elapsed_seconds == speechTime) {
-            comment = `<span style="color: green;">on time!</span>`
+        if (Math.round(time_elapsed_seconds) == speechTime) {
+            comment = `on time!`
         }
-        else if (time_elapsed_seconds > speechTime) {
+        else if (Math.round(time_elapsed_seconds) > speechTime) {
             let t = time_elapsed_seconds - speechTime;
             if (t > 60) {
-                comment = `<span style="color: red;">${Math.floor(t / 60)} minutes and ${t % 60} seconds over time</span>`
+                comment = `${Math.floor(t / 60)} minutes and ${Math.floor(t % 60)} seconds over time`
             }
             else {
-                comment = `<span style="color: red;">${t} seconds over time</span>`
+                comment = `${Math.floor(t)} seconds over time`
             }
         }
         else {
             let t = speechTime - time_elapsed_seconds;
+            console.log(t);
             if (t > 60) {
-                comment = `<span style="color: yellow;">${Math.floor(t / 60)} minutes and ${t % 60} seconds under time</span>`
+                comment = `${Math.floor(t / 60)} minutes and ${Math.floor(t % 60)} seconds under time`
             }
             else {
-                comment = `<span style="color: yellow;">${t} seconds under time</span>`
+                comment = `${Math.floor(t)} seconds under time`
             }
         }
 
@@ -154,7 +198,7 @@ function stopClock() {
 
         drawAlerts();
 
-        record.innerHTML = `${record_count++}. ${getName()} - ${time} - ${comment}`;
+        record.innerText = `${record_count++}. ${getName()} - ${time} - ${comment}`;
 
         document.getElementById("records").appendChild(record);
         time_elapsed_seconds = 0;
@@ -165,7 +209,6 @@ function stopClock() {
             clock.style.opacity = 1;
             window.clearTimeout(a);
         }, 500);
-
     }
 }
 
@@ -178,6 +221,7 @@ function addAlert(mins, secs) {
 
     alerts.push(t);
     drawAlerts();
+    updateUrl();
 }
 
 function drawAlerts() {
@@ -213,10 +257,38 @@ function copyTemplateLink() {
     alert("Templated link copied!");
 }
 
+function updateUrl() {
+    if (history) {
+        let url = "?st=";
+        url += speechTime.toString();
+        if(alerts.length != 0) {
+            url += "&alerts=";
+            for (let i = 0; i < alerts.length; i++) {
+                url += alerts[i].toString();
+                if (i + 1 != alerts.length) {
+                    url += ",";
+                }
+            }
+        }
+
+        if(current_theme.name == undefined)
+        {
+            url += "&theme=" + theme_to_string(current_theme);
+        }
+        else {
+            url += "&theme=" + current_theme.name;
+        }
+
+        history.replaceState({}, "", url);
+    }
+}
+
 function updateSpeechTime() {
     let mins = parseInt(document.getElementById("t_min").value.toString() || "0");
     let secs = parseInt(document.getElementById("t_sec").value.toString() || "0");
     speechTime = mins * 60 + secs;
+
+    updateUrl();
 }
 
 setTimer(0, 0);
@@ -277,7 +349,6 @@ cl_ctx.lineTo(cl.width, 10);
 cl_ctx.closePath();
 cl_ctx.stroke();
 
-updateSpeechTime();
 
 
 let params = (new URL(document.location)).searchParams;
@@ -294,5 +365,29 @@ if(params.get("alerts")) {
     drawAlerts();
 }
 
+if(params.get("theme")) {
+    let theme_str = params.get("theme");
+
+    let known_theme = false;
+    for (const theme of themes) {
+        if (theme.name == theme_str) {
+            apply_theme(theme);
+            known_theme = true;
+            break;
+        }
+    }
+
+    if (!known_theme) {
+        let theme = string_to_theme(params.get("theme"));
+
+        current_theme = theme;
+
+        apply_theme(theme);
+    }
+}
 
 document.getElementById("name").placeholder = `Speaker ${name_number}`;
+
+document.getElementById("version_display").innerText = "Version: " + current_version;
+
+updateSpeechTime();
